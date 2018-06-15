@@ -5,11 +5,11 @@
 (maybe-require-package 'prettier-js)
 
 (defcustom preferred-javascript-mode
-  (first (remove-if-not #'fboundp '(js2-mode js-mode)))
+  (first (remove-if-not #'fboundp '(js2-mode js-mode rjsx-mode)))
   "Javascript mode to use for .js files."
   :type 'symbol
   :group 'programming
-  :options '(js2-mode js-mode))
+  :options '(js2-mode js-mode rjsx-mode))
 
 (defconst preferred-javascript-indent-level 2)
 
