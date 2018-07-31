@@ -13,10 +13,16 @@
 
 (global-set-key (kbd "M-g r") 'find-grep-dired)
 
+(defun split-window-and-balance ()
+  "Split and balance: \"split-window-horizontally\" and then \"balance-windows\"."
+  (interactive)
+  (split-window-horizontally)
+  (balance-windows))
 
-
-(key-chord-define-global "qq" 'split-window-horizontally)
+(key-chord-define-global "qq" 'split-window-and-balance)
 (global-set-key (kbd "C-x 4") 'split-window-horizontally)
+
+
 
 (defun switch-to-previous-buffer ()
   "Switch to previously open buffer.
