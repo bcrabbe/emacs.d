@@ -21,7 +21,7 @@
 
 (key-chord-define-global "qq" 'split-window-and-balance)
 (global-set-key (kbd "C-x 4") 'split-window-horizontally)
-
+(key-chord-define-global "pp" 'balance-windows)
 
 
 (defun switch-to-previous-buffer ()
