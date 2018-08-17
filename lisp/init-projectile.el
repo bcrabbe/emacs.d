@@ -1,9 +1,7 @@
 (when (maybe-require-package 'projectile)
   (add-hook 'after-init-hook 'projectile-mode)
 
-  ;; The following code means you get a menu if you hit "C-c p" and wait
-  (after-load 'guide-key
-    (add-to-list 'guide-key/guide-key-sequence "C-c p"))
+  (setq projectile-keymap-prefix (kbd "C-c C-p"))
 
   ;; Shorter modeline
   (after-load 'projectile
