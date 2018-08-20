@@ -43,6 +43,11 @@
                                      {line,?LINE},
                                      {}])"))
 (key-chord-define-global "LL" 'error-logger-info-report)
+(defun insert-console-log ()
+  "Insert console.log()."
+  (interactive)
+  (insert "console.log()"))
+(key-chord-define-global "CC" 'insert-console-log)
 
 (defun switch-to-previous-buffer ()
   "Switch to previously open buffer.
