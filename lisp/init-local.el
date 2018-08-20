@@ -1,14 +1,14 @@
-(load "./hl-tags-mode.el")
-(require-package 'zenburn-theme)
+(load "../site-lisp/hl-tags-mode.el")
+;;(require-package 'zenburn-theme)
 (require-package 'emmet-mode)
 (require-package 'rainbow-mode)
 (require-package 'key-chord)
 (require-package 'rjsx-mode)
 
 
-(load "../themes/zenburn-theme.el")
+(load "../site-lisp/zenburn-theme.el")
 
-;; (setq-default custom-enabled-themes '(zenburn-theme))
+(setq-default custom-enabled-themes '(zenburn-theme))
 
 (setq Preferred-javascript-mode 'rjsx-mode)
 (require 'key-chord)
@@ -32,6 +32,9 @@
 
 (key-chord-define-global "§§" 'split-window-and-balance)
 (global-set-key (kbd "C-x 4") 'split-window-horizontally)
+(global-set-key (kbd "M-`") 'other-frame)
+(global-set-key (kbd "M-[") 'windmove-left)
+(global-set-key (kbd "M-]") 'windmove-right)
 
 (defun error-logger-info-report ()
   "Insert error_logger call."
