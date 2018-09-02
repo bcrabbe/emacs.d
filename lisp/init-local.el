@@ -1,14 +1,12 @@
 (load "../site-lisp/hl-tags-mode.el")
-;;(require-package 'zenburn-theme)
-(require-package 'emmet-mode)
-(require-package 'rainbow-mode)
-(require-package 'key-chord)
-(require-package 'rjsx-mode)
-
-
 (load "../site-lisp/zenburn-theme.el")
-
 (setq-default custom-enabled-themes '(zenburn-theme))
+
+(maybe-require-package 'emmet-mode)
+(maybe-require-package 'rainbow-mode)
+(maybe-require-package 'key-chord)
+(maybe-require-package 'rjsx-mode)
+;;; (maybe-require-package 'indium)
 
 (setq Preferred-javascript-mode 'rjsx-mode)
 (require 'key-chord)
@@ -35,6 +33,7 @@
 (global-set-key (kbd "M-`") 'other-frame)
 (global-set-key (kbd "M-[") 'windmove-left)
 (global-set-key (kbd "M-]") 'windmove-right)
+(global-set-key (kbd "M-=") 'er/contract-region)
 
 (defun error-logger-info-report ()
   "Insert error_logger call."
@@ -48,16 +47,18 @@
   (interactive)
   (insert "console.log()"))
 (key-chord-define-global "CC" 'insert-console-log)
+(defun insert-const ()
+  "Insert const"
+  (interactive)
+  (insert "const "))
+(key-chord-define-global "XX" 'insert-const)
 
 (defun switch-to-previous-buffer ()
   "Switch to previously open buffer.
 Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
-
 (key-chord-define-global "JJ" 'switch-to-previous-buffer)
 
-(global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key "\C-c\C-m" 'execute-extended-command)
 
 (provide 'init-local)
