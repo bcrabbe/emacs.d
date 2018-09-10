@@ -2,6 +2,9 @@
 (load "../site-lisp/zenburn-theme.el")
 (setq-default custom-enabled-themes '(zenburn-theme))
 
+(maybe-require-package 'edit-server)
+(edit-server-start +1)
+
 (maybe-require-package 'emmet-mode)
 (maybe-require-package 'rainbow-mode)
 (maybe-require-package 'key-chord)
