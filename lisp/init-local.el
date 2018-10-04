@@ -4,7 +4,25 @@
 
 (maybe-require-package 'edit-server)
 (edit-server-start +1)
+(maybe-require-package 'winner-mode)
+(winner-mode +1)
 
+(maybe-require-package 'flycheck-yamllint)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook 'flycheck-yamllint-setup))
+(add-hook 'yaml-hook 'flycheck-mode)
+(maybe-require-package 'smart-shift)
+;;(key-chord-define-global "<<" 'smart-shift-left)
+;;(key-chord-define-global ">>" 'smart-shift-right)
+(maybe-require-package 'highlight-indentation)
+;;(load "../site-lisp/highlight-indentation.el")
+(set-face-background 'highlight-indentation-face "#5c5d60")
+(set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+(add-hook 'yaml-hook 'hightlight-indentation-mode)
+
+(maybe-require-package 'nginx-mode)
+(maybe-require-package 'string-inflection)
+(key-chord-define-global "^^" 'string-inflection-lower-camelcase)
 (maybe-require-package 'emmet-mode)
 (maybe-require-package 'rainbow-mode)
 (maybe-require-package 'key-chord)
@@ -24,6 +42,9 @@
 (add-hook 'rjsx-mode-hook 'rainbow-mode)
 
 (global-set-key (kbd "M-g r") 'rgrep)
+
+;;;was always breaking my code by pressing this
+(global-set-key (kbd "M-t") nil)
 
 (defun split-window-and-balance ()
   "Split and balance: \"split-window-horizontally\" and then \"balance-windows\"."
@@ -51,7 +72,7 @@
   (insert "console.log()"))
 (key-chord-define-global "CC" 'insert-console-log)
 (defun insert-const ()
-  "Insert const"
+  "Insert const."
   (interactive)
   (insert "const "))
 (key-chord-define-global "XX" 'insert-const)
