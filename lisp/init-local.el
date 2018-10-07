@@ -1,11 +1,15 @@
 (load "../site-lisp/hl-tags-mode.el")
 (load "../site-lisp/zenburn-theme.el")
-(setq-default custom-enabled-themes '(zenburn-theme))
+;;(setq-default custom-enabled-themes '(zenburn-theme))
+(set-face-attribute 'region nil :background "#666")
 
 (maybe-require-package 'edit-server)
 (edit-server-start +1)
 (maybe-require-package 'winner-mode)
 (winner-mode +1)
+
+(maybe-require-package 'cmake-mode)
+(add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
 
 (maybe-require-package 'flycheck-yamllint)
 (eval-after-load 'flycheck
@@ -14,10 +18,11 @@
 (maybe-require-package 'smart-shift)
 ;;(key-chord-define-global "<<" 'smart-shift-left)
 ;;(key-chord-define-global ">>" 'smart-shift-right)
+
 (maybe-require-package 'highlight-indentation)
 ;;(load "../site-lisp/highlight-indentation.el")
-(set-face-background 'highlight-indentation-face "#5c5d60")
-(set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+;;(set-face-background 'highlight-indentation-face "#5c5d60")
+;;(set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
 (add-hook 'yaml-hook 'hightlight-indentation-mode)
 
 (maybe-require-package 'nginx-mode)
