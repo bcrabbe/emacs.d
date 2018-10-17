@@ -39,8 +39,10 @@
 (key-chord-mode +1)
 
 ;;make <return> insert a newline; multiple-cursors-mode can still be disabled with C-g.
-(define-key mc/keymap (kbd "<return>") nil)
-
+(add-hook 'multiple-cursors-mode-hook
+          (lambda ()
+            "remove <RET> kbd"
+            (define-key mc/keymap (kbd "<return>") nil)))
 
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))
 
