@@ -38,6 +38,9 @@
 (require 'key-chord)
 (key-chord-mode +1)
 
+;;make <return> insert a newline; multiple-cursors-mode can still be disabled with C-g.
+(define-key mc/keymap (kbd "<return>") nil)
+
 
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))
 
@@ -88,6 +91,55 @@ Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 (key-chord-define-global "JJ" 'switch-to-previous-buffer)
+
+(defun fresh-mui-component ()
+  "Insert error_logger call."
+  (interactive)
+  (insert "import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import * as R from 'ramda';
+import classNames from 'classnames';
+
+class Default extends React.PureComponent {
+
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired,
+  };
+
+  static defaultProps = {
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
+
+  render() {
+    const {classes} = this.props;
+    return (
+      <div
+        style={this.props.style}
+        className={classNames(
+          this.props.className,
+          classes.root,
+        )}
+      >
+      </div>
+    );
+  }
+}
+
+const styles = theme => ({
+  root: {
+    width: '100%',
+  }
+});
+
+export default withStyles(styles, { withTheme: true })(Default);
+"))
 
 
 (provide 'init-local)
