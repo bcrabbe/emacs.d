@@ -47,9 +47,8 @@
 ;; Use C-c C-z to toggle between elisp files and an ielm session
 ;; I might generalise this to ruby etc., or even just adopt the repl-toggle package.
 
-(defvar sanityinc/repl-original-buffer nil
+(defvar-local sanityinc/repl-original-buffer nil
   "Buffer from which we jumped to this REPL.")
-(make-variable-buffer-local 'sanityinc/repl-original-buffer)
 
 (defvar sanityinc/repl-switch-function 'switch-to-buffer-other-window)
 
@@ -81,8 +80,7 @@
   "Locally set `hippie-expand' completion functions for use with Emacs Lisp."
   (make-local-variable 'hippie-expand-try-functions-list)
   (add-to-list 'hippie-expand-try-functions-list 'try-complete-lisp-symbol t)
-  (add-to-list 'hippie-expand-try-functions-list 'try-complete-lisp-symbol-partially t)
-  (add-to-list 'hippie-expand-try-functions-list 'my/try-complete-lisp-symbol-without-namespace t))
+  (add-to-list 'hippie-expand-try-functions-list 'try-complete-lisp-symbol-partially t))
 
 
 ;; ----------------------------------------------------------------------------
@@ -236,7 +234,9 @@
 
 (when (maybe-require-package 'rainbow-mode)
   (add-hook 'sanityinc/theme-mode-hook 'rainbow-mode)
-  (add-hook 'help-mode-hook 'rainbow-mode))
+  (add-hook 'help-mode-hook 'rainbow-mode)
+  (after-load 'rainbow-mode
+    (diminish 'rainbow-mode)))
 
 (when (maybe-require-package 'aggressive-indent)
   ;; Can be prohibitively slow with very long forms

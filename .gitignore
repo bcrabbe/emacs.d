@@ -15,11 +15,9 @@ CVS
 .*.lock
 /tramp
 /TODO
-/anything-c-adaptive-history
 /.org-id-locations
 cookies
 /newsticker
-/ac-comphist.dat
 \#*
 site-lisp/package/
 /swank
