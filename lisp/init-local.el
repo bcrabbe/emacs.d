@@ -72,9 +72,10 @@
 (defun error-logger-info-report ()
   "Insert error_logger call."
   (interactive)
-  (insert "error_logger:info_report([{module,?MODULE},
-                                     {line,?LINE},
-                                     {}])"))
+  (insert "error_logger:info_report([{module, ?MODULE},
+                                     {line, ?LINE},
+                                     {function, ?FUNCTION_NAME},
+                                     {}]),"))
 (key-chord-define-global "LL" 'error-logger-info-report)
 (defun insert-console-log ()
   "Insert console.log()."
