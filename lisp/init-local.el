@@ -34,8 +34,10 @@
 (maybe-require-package 'rjsx-mode)
 ;;; (maybe-require-package 'indium)
 
-(setq Preferred-javascript-mode 'rjsx-mode)
-(require 'key-chord)
+
+(setq erlang-root-dir "/usr/local/Cellar/erlang/21.1.1")
+
+(maybe-require-package 'key-chord)
 (key-chord-mode +1)
 
 ;;make <return> insert a newline; multiple-cursors-mode can still be disabled with C-g.
@@ -68,7 +70,7 @@
 (global-set-key (kbd "M-[") 'windmove-left)
 (global-set-key (kbd "M-]") 'windmove-right)
 (global-set-key (kbd "M-=") 'er/contract-region)
-
+(global-set-key (kbd "C-M-<backspace>") 'backward-kill-sexp)
 (defun error-logger-info-report ()
   "Insert error_logger call."
   (interactive)
@@ -144,6 +146,13 @@ const styles = theme => ({
 export default withStyles(styles, { withTheme: true })(Default);
 "))
 
+(defun insert-component-did-update ()
+  "Insert componentDidUpdate react lifecycle method."
+  (interactive)
+  (insert "componentDidUpdate(prevProps, prevState) {
+
+  }"))
+
 (maybe-require-package 'multi-web-mode)
 (setq mweb-default-major-mode 'html-mode)
 (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
@@ -159,5 +168,6 @@ export default withStyles(styles, { withTheme: true })(Default);
     (abort-recursive-edit)))
 
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
+
 
 (provide 'init-local)
