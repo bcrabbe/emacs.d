@@ -1,12 +1,12 @@
 (require-package 'paredit)
 (autoload 'enable-paredit-mode "paredit")
 
-(defun maybe-map-paredit-newline ()
-  (unless (or (memq major-mode '(inferior-emacs-lisp-mode cider-repl-mode))
-              (minibufferp))
-    (local-set-key (kbd "RET") 'paredit-newline)))
+;; (defun maybe-map-paredit-newline ()
+;;   (unless (or (memq major-mode '(inferior-emacs-lisp-mode cider-repl-mode))
+;;               (minibufferp))
+;;     (local-set-key (kbd "RET") 'paredit-newline)))
 
-(add-hook 'paredit-mode-hook 'maybe-map-paredit-newline)
+;; (add-hook 'paredit-mode-hook 'maybe-map-paredit-newline)
 
 (after-load 'paredit
   (diminish 'paredit-mode " Par")

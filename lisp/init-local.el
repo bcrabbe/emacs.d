@@ -21,9 +21,10 @@
 
 (maybe-require-package 'highlight-indentation)
 ;;(load "../site-lisp/highlight-indentation.el")
-;;(set-face-background 'highlight-indentation-face "#5c5d60")
-;;(set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
 (add-hook 'yaml-hook 'hightlight-indentation-mode)
+;; (set-face-background 'highlight-indentation-face "#5c5d60")
+;; (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+
 
 (maybe-require-package 'nginx-mode)
 (maybe-require-package 'string-inflection)
@@ -67,10 +68,13 @@
 (key-chord-define-global "§§" 'split-window-and-balance)
 (global-set-key (kbd "C-x 4") 'split-window-horizontally)
 (global-set-key (kbd "M-`") 'other-frame)
-(global-set-key (kbd "M-[") 'windmove-left)
-(global-set-key (kbd "M-]") 'windmove-right)
+(global-set-key (kbd "C-`") 'other-frame)
+(global-set-key (kbd "M-]") 'next-multiframe-window)
+(global-set-key (kbd "M-[") 'previous-multiframe-window)
 (global-set-key (kbd "M-=") 'er/contract-region)
 (global-set-key (kbd "C-M-<backspace>") 'backward-kill-sexp)
+(global-set-key (kbd "C-M-d") 'kill-sexp)
+
 (defun error-logger-info-report ()
   "Insert error_logger call."
   (interactive)
@@ -169,5 +173,23 @@ export default withStyles(styles, { withTheme: true })(Default);
 
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
 
+(maybe-require-package 'flycheck)
+
+(flycheck-define-checker erlang-otp
+  "An Erlang syntax checker using the Erlang interpreter."
+  :command ("erlc" "-o" temporary-directory "-Wall"
+            "-I" "../include" "-I" "../../include"
+            "-I" "../deps"
+            "-I" "../../../include" source)
+  :error-patterns
+  ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
+   (error line-start (file-name) ":" line ": " (message) line-end))
+  :modes (erlang-mode)
+  )
+
+(add-hook 'erlang-mode-hook
+(lambda ()
+  (flycheck-select-checker 'erlang-otp)
+  (flycheck-mode)))
 
 (provide 'init-local)
