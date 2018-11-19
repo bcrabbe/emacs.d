@@ -19,11 +19,11 @@
 ;;(key-chord-define-global "<<" 'smart-shift-left)
 ;;(key-chord-define-global ">>" 'smart-shift-right)
 
-(maybe-require-package 'highlight-indentation)
-;;(load "../site-lisp/highlight-indentation.el")
+;;(maybe-require-package 'highlight-indentation)
+(load "../site-lisp/highlight-indentation.el")
 (add-hook 'yaml-hook 'hightlight-indentation-mode)
-;; (set-face-background 'highlight-indentation-face "#5c5d60")
-;; (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+(set-face-background 'highlight-indentation-face "#5c5d60")
+(set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
 
 
 (maybe-require-package 'nginx-mode)
@@ -179,7 +179,7 @@ export default withStyles(styles, { withTheme: true })(Default);
   "An Erlang syntax checker using the Erlang interpreter."
   :command ("erlc" "-o" temporary-directory "-Wall"
             "-I" "../include" "-I" "../../include"
-            "-I" "../deps"
+            "-I" "../deps" "-I" "./"
             "-I" "../../../include" source)
   :error-patterns
   ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
@@ -188,8 +188,8 @@ export default withStyles(styles, { withTheme: true })(Default);
   )
 
 (add-hook 'erlang-mode-hook
-(lambda ()
-  (flycheck-select-checker 'erlang-otp)
-  (flycheck-mode)))
+          (lambda ()
+            (flycheck-select-checker 'erlang-otp)
+            (flycheck-mode)))
 
 (provide 'init-local)
