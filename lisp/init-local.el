@@ -1,7 +1,7 @@
 (load "../site-lisp/hl-tags-mode.el")
 (load "../site-lisp/zenburn-theme.el")
 ;;(setq-default custom-enabled-themes '(zenburn-theme))
-(set-face-attribute 'region nil :background "#666")
+(set-face-attribute 'region nil :background "#066")
 
 (maybe-require-package 'edit-server)
 (edit-server-start +1)
@@ -73,15 +73,17 @@
 (global-set-key (kbd "M-[") 'previous-multiframe-window)
 (global-set-key (kbd "M-=") 'er/contract-region)
 (global-set-key (kbd "C-M-<backspace>") 'backward-kill-sexp)
-(global-set-key (kbd "C-M-d") 'kill-sexp)
+(global-set-key (kbd "M-s s") 'paredit-splice-sexp)
 
 (defun error-logger-info-report ()
   "Insert error_logger call."
   (interactive)
-  (insert "error_logger:info_report([{module, ?MODULE},
-                                     {line, ?LINE},
-                                     {function, ?FUNCTION_NAME},
-                                     {}]),"))
+  (insert "error_logger:info_report(
+   [{module, ?MODULE},
+   {line, ?LINE},
+   {function, ?FUNCTION_NAME},
+   {}]
+  ),"))
 (key-chord-define-global "LL" 'error-logger-info-report)
 (defun insert-console-log ()
   "Insert console.log()."
@@ -165,7 +167,6 @@ export default withStyles(styles, { withTheme: true })(Default);
 (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
 (multi-web-global-mode 1)
 
-
 (defun stop-using-minibuffer ()
   "kill the minibuffer"
   (when (and (>= (recursion-depth) 1) (active-minibuffer-window))
@@ -173,23 +174,21 @@ export default withStyles(styles, { withTheme: true })(Default);
 
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
 
-(maybe-require-package 'flycheck)
-
-(flycheck-define-checker erlang-otp
-  "An Erlang syntax checker using the Erlang interpreter."
-  :command ("erlc" "-o" temporary-directory "-Wall"
-            "-I" "../include" "-I" "../../include"
-            "-I" "../deps" "-I" "./"
-            "-I" "../../../include" source)
-  :error-patterns
-  ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
-   (error line-start (file-name) ":" line ": " (message) line-end))
-  :modes (erlang-mode)
-  )
-
-(add-hook 'erlang-mode-hook
-          (lambda ()
-            (flycheck-select-checker 'erlang-otp)
-            (flycheck-mode)))
+(when (maybe-require-package 'flycheck)
+  (after-load 'flychceck
+    (flycheck-define-checker erlang-otp
+      "An Erlang syntax checker using the Erlang interpreter."
+      :command ("erlc" "-o" temporary-directory "-Wall"
+                "-I" "../include" "-I" "../../include"
+                "-I" "../deps" "-I" "./"
+                "-I" "../../../include" source)
+      :error-patterns
+      ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
+       (error line-start (file-name) ":" line ": " (message) line-end))
+      :modes (erlang-mode)))
+  (add-hook 'erlang-mode-hook
+            (lambda ()
+              (flycheck-select-checker 'erlang-otp)
+              (flycheck-mode))))
 
 (provide 'init-local)
