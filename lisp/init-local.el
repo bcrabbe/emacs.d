@@ -185,10 +185,10 @@ export default withStyles(styles, { withTheme: true })(Default);
       :error-patterns
       ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
        (error line-start (file-name) ":" line ": " (message) line-end))
-      :modes (erlang-mode)))
-  (add-hook 'erlang-mode-hook
-            (lambda ()
-              (flycheck-select-checker 'erlang-otp)
-              (flycheck-mode))))
+      :modes (erlang-mode))
+    (add-hook 'erlang-mode-hook
+              (lambda ()
+                (flycheck-select-checker 'erlang-otp)
+                (flycheck-mode)))))
 
 (provide 'init-local)
