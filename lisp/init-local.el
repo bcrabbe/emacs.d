@@ -107,17 +107,17 @@ Repeated invocations toggle between the two most recently open buffers."
   "Insert error_logger call."
   (interactive)
   (insert "import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import classNames from 'classnames';
+import classnames from 'classnames';
 
 class Default extends React.PureComponent {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
-  };
+  }
 
   static defaultProps = {
   }
@@ -133,7 +133,7 @@ class Default extends React.PureComponent {
     return (
       <div
         style={this.props.style}
-        className={classNames(
+        className={classnames(
           this.props.className,
           classes.root,
         )}
@@ -149,7 +149,7 @@ const styles = theme => ({
   }
 });
 
-export default withStyles(styles, { withTheme: true })(Default);
+export default withStyles(styles, {withTheme: true})(Default);
 "))
 
 (defun insert-component-did-update ()
@@ -174,21 +174,21 @@ export default withStyles(styles, { withTheme: true })(Default);
 
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
 
-(when (maybe-require-package 'flycheck)
-  (after-load 'flychceck
-    (flycheck-define-checker erlang-otp
-      "An Erlang syntax checker using the Erlang interpreter."
-      :command ("erlc" "-o" temporary-directory "-Wall"
-                "-I" "../include" "-I" "../../include"
-                "-I" "../deps" "-I" "./"
-                "-I" "../../../include" source)
-      :error-patterns
-      ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
-       (error line-start (file-name) ":" line ": " (message) line-end))
-      :modes (erlang-mode))
-    (add-hook 'erlang-mode-hook
-              (lambda ()
-                (flycheck-select-checker 'erlang-otp)
-                (flycheck-mode)))))
+;; (when (maybe-require-package 'flycheck)
+;;   (after-load 'flychceck
+;;     (flycheck-define-checker erlang-otp
+;;       "An Erlang syntax checker using the Erlang interpreter."
+;;       :command ("erlc" "-o" temporary-directory "-Wall"
+;;                 "-I" "../include" "-I" "../../include"
+;;                 "-I" "../deps" "-I" "./"
+;;                 "-I" "../../../include" source)
+;;       :error-patterns
+;;       ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
+;;        (error line-start (file-name) ":" line ": " (message) line-end))
+;;       :modes (erlang-mode))
+;;     (add-hook 'erlang-mode-hook
+;;               (lambda ()
+;;                 (flycheck-select-checker 'erlang-otp)
+;;                 (flycheck-mode)))))
 
 (provide 'init-local)
