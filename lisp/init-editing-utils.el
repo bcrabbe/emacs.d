@@ -87,8 +87,8 @@
 
 
 
-(when (fboundp 'display-line-numbers-mode)
-  (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+;; (when (fboundp 'display-line-numbers-mode)
+;;   (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 
 
 (when (require-package 'rainbow-delimiters)
