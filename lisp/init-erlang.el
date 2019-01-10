@@ -1,3 +1,7 @@
+;;; init-erlang.el --- Support for the Erlang language -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+
 (when (maybe-require-package 'erlang)
   (require 'erlang-start)
   (setq flycheck-display-errors-function nil
@@ -7,3 +11,4 @@
 
 
 (provide 'init-erlang)
+;;; init-erlang.el ends here
