@@ -5,7 +5,7 @@
 
 (maybe-require-package 'edit-server)
 (edit-server-start +1)
-(maybe-require-package 'winner-mode)
+;; (maybe-require-package 'winner-mode)
 (winner-mode +1)
 
 (maybe-require-package 'cmake-mode)
@@ -173,22 +173,5 @@ export default withStyles(styles, {withTheme: true})(Default);
     (abort-recursive-edit)))
 
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
-
-;; (when (maybe-require-package 'flycheck)
-;;   (after-load 'flychceck
-;;     (flycheck-define-checker erlang-otp
-;;       "An Erlang syntax checker using the Erlang interpreter."
-;;       :command ("erlc" "-o" temporary-directory "-Wall"
-;;                 "-I" "../include" "-I" "../../include"
-;;                 "-I" "../deps" "-I" "./"
-;;                 "-I" "../../../include" source)
-;;       :error-patterns
-;;       ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
-;;        (error line-start (file-name) ":" line ": " (message) line-end))
-;;       :modes (erlang-mode))
-;;     (add-hook 'erlang-mode-hook
-;;               (lambda ()
-;;                 (flycheck-select-checker 'erlang-otp)
-;;                 (flycheck-mode)))))
 
 (provide 'init-local)
