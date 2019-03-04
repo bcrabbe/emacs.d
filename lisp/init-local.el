@@ -168,10 +168,31 @@ export default withStyles(styles, {withTheme: true})(Default);
 (multi-web-global-mode 1)
 
 (defun stop-using-minibuffer ()
-  "kill the minibuffer"
+  "Kill the minibuffer."
   (when (and (>= (recursion-depth) 1) (active-minibuffer-window))
     (abort-recursive-edit)))
 
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
+
+
+(defun dlh-increment-string (string)
+  "Increment the first integer found in STRING."
+  (setq start (string-match "\\([0-9]+\\)" string))
+  (setq end (match-end 0))
+  (setq number (string-to-number (substring string start end)))
+  (setq new-num-string (number-to-string (+ 1 number)))
+  (concat
+   (substring string 0 start)
+   new-num-string
+   (substring string end)))
+
+(defun dlh-yank-increment ()
+  "Yank text, incrementing the first integer found in it."
+  (interactive "*")
+  (setq new-text (dlh-increment-string (current-kill 0)))
+  (insert-for-yank new-text)
+  (kill-new new-text t))
+
+(global-set-key (kbd "C-c C-y") 'dlh-yank-increment)
 
 (provide 'init-local)

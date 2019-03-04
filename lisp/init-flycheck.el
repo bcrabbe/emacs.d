@@ -5,6 +5,7 @@
 (when (maybe-require-package 'flycheck)
   (add-hook 'after-init-hook 'global-flycheck-mode)
   (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list)
+  (maybe-require-package 'flycheck-inline)
   (when (maybe-require-package 'flycheck-color-mode-line)
     (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
 
