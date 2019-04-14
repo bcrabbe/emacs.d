@@ -74,6 +74,12 @@
 (global-set-key (kbd "M-=") 'er/contract-region)
 (global-set-key (kbd "C-M-<backspace>") 'backward-kill-sexp)
 (global-set-key (kbd "M-s s") 'paredit-splice-sexp)
+(global-set-key (kbd "M-s p") 'paredit-split-sexp)
+(global-set-key (kbd "M-s j") 'paredit-join-sexp)
+(global-set-key (kbd "C-)") 'paredit-forward-slurp-sexp)
+(global-set-key (kbd "C-(") 'paredit-backward-slurp-sexp)
+(global-set-key (kbd "C-}") 'paredit-forward-barf-sexp)
+(global-set-key (kbd "C-{") 'paredit-backward-barf-sexp)
 
 (defun error-logger-info-report ()
   "Insert error_logger call."
