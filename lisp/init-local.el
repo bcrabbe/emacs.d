@@ -25,16 +25,22 @@
 (set-face-background 'highlight-indentation-face "#5c5d60")
 (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
 
-
+(maybe-require-package 'thrift)
 (maybe-require-package 'nginx-mode)
 (maybe-require-package 'string-inflection)
-(key-chord-define-global "^^" 'string-inflection-lower-camelcase)
 (maybe-require-package 'emmet-mode)
 (maybe-require-package 'rainbow-mode)
 (maybe-require-package 'key-chord)
 (maybe-require-package 'rjsx-mode)
+(maybe-require-package 'graphql-mode)
+(maybe-require-package 'scala-mode)
+;; (maybe-require-package 'ensime-mode)
 ;;; (maybe-require-package 'indium)
 
+;; (add-to-list 'exec-path "/usr/local/Cellar/sbt/1.2.8/bin/sbt")
+(setq
+ ensime-sbt-command "/usr/local/Cellar/sbt/1.2.8/libexec/bin/sbt.bat"
+ sbt:program-name "/usr/local/Cellar/sbt/1.2.8/libexec/bin/sbt.bat")
 
 (setq erlang-root-dir "/usr/local/Cellar/erlang/21.1.1")
 
@@ -58,6 +64,8 @@
 
 ;;;was always breaking my code by pressing this
 (global-set-key (kbd "M-t") nil)
+
+(setq-default js2-basic-offset 4)
 
 (defun split-window-and-balance ()
   "Split and balance: \"split-window-horizontally\" and then \"balance-windows\"."
@@ -101,6 +109,7 @@
   (interactive)
   (insert "const "))
 (key-chord-define-global "XX" 'insert-const)
+(key-chord-define-global "^^" 'string-inflection-lower-camelcase)
 
 (defun switch-to-previous-buffer ()
   "Switch to previously open buffer.
@@ -180,6 +189,10 @@ export default withStyles(styles, {withTheme: true})(Default);
 
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
 
+;; https://superuser.com/questions/1133436/way-too-fast-scrolling-in-emacs-on-osx
+(setq mouse-wheel-scroll-amount '(3 ((shift) . 1) ((control) . nil)))
+(setq mouse-wheel-progressive-speed nil)
+(setq mac-mouse-wheel-mode t)
 
 (defun dlh-increment-string (string)
   "Increment the first integer found in STRING."
