@@ -66,6 +66,7 @@
 (global-set-key (kbd "M-t") nil)
 
 (setq-default js2-basic-offset 4)
+(setq-default js2-strict-trailing-comma-warning nil)
 
 (defun split-window-and-balance ()
   "Split and balance: \"split-window-horizontally\" and then \"balance-windows\"."
