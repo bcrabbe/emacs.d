@@ -66,8 +66,12 @@
 (global-set-key (kbd "M-t") nil)
 
 (setq-default js2-basic-offset 4)
+(setq-default sgml-basic-offset 4)
 (setq-default js2-strict-trailing-comma-warning nil)
 
+(maybe-require-package 'buffer-move)
+(global-set-key (kbd "C-M-}") 'buf-move-right)
+(global-set-key (kbd "C-M-{") 'buf-move-left)
 (defun split-window-and-balance ()
   "Split and balance: \"split-window-horizontally\" and then \"balance-windows\"."
   (interactive)
@@ -76,6 +80,7 @@
 
 (key-chord-define-global "§§" 'split-window-and-balance)
 (global-set-key (kbd "C-x 4") 'split-window-horizontally)
+(global-set-key (kbd "C-x 2") 'split-window-vertically)
 (global-set-key (kbd "M-`") 'other-frame)
 (global-set-key (kbd "C-`") 'other-frame)
 (global-set-key (kbd "M-]") 'next-multiframe-window)
@@ -191,7 +196,9 @@ export default withStyles(styles, {withTheme: true})(Default);
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
 
 ;; https://superuser.com/questions/1133436/way-too-fast-scrolling-in-emacs-on-osx
-(setq mouse-wheel-scroll-amount '(3 ((shift) . 1) ((control) . nil)))
+(setq mouse-wheel-scroll-amount '(3
+                                  ((shift) . 1)
+                                  ((control) . nil)))
 (setq mouse-wheel-progressive-speed nil)
 (setq mac-mouse-wheel-mode t)
 
