@@ -6,7 +6,9 @@
 (maybe-require-package 'js2-mode)
 (maybe-require-package 'rjsx-mode)
 (maybe-require-package 'coffee-mode)
-(maybe-require-package 'typescript-mode)
+(load "../site-lisp/typescript-mode.el")
+;; (maybe-require-package 'typescript-mode)
+(maybe-require-package 'tide)
 (maybe-require-package 'prettier-js)
 
 (defcustom preferred-javascript-mode
@@ -104,6 +106,26 @@
     (add-hook 'typescript-mode-hook 'add-node-modules-path))
   (after-load 'js2-mode
     (add-hook 'js2-mode-hook 'add-node-modules-path)))
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
 
 (provide 'init-javascript)
 ;;; init-javascript.el ends here
