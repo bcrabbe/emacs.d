@@ -1,4 +1,4 @@
-;;; init-javascript.el --- Support for Javascript and derivatives -*- lexical-binding: t -*-
+;;; Init-javascript.el --- Support for Javascript and derivatives -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -7,8 +7,16 @@
 (maybe-require-package 'rjsx-mode)
 (maybe-require-package 'coffee-mode)
 (load "../site-lisp/typescript-mode.el")
-;; (maybe-require-package 'typescript-mode)
-(maybe-require-package 'tide)
+(maybe-require-package 'ng2-mode)
+(maybe-require-package 'web-mode)
+;; (Maybe-require-package 'typescript-mode)
+
+
+(after-load 'typescript-mode
+  (maybe-require-package 'tide))
+
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+
 (maybe-require-package 'prettier-js)
 
 (defcustom preferred-javascript-mode
@@ -18,13 +26,13 @@
   :group 'programming
   :options '(js2-mode js-mode rjsx-mode))
 
-(defconst preferred-javascript-indent-level 2)
+(defconst preferred-javascript-indent-level 4)
 
 ;; Need to first remove from list if present, since elpa adds entries too, which
 ;; may be in an arbitrary order
 
 (add-to-list 'auto-mode-alist '("\\.\\(js\\|es6\\)\\(\\.erb\\)?\\'" . js2-mode))
-
+;; (add-to-list 'auto-mode-alist '("\\.\\(ts\\|es6\\)\\(\\.erb\\)?\\'" . ng2-mode))
 ;; js2-mode
 
 ;; Change some defaults: customize them to override
@@ -34,20 +42,37 @@
   (setq-default js2-mode-show-parse-errors nil
                 js2-mode-show-strict-warnings nil)
   ;; ... but enable it if flycheck can't handle javascript
+  ;; use local eslint from node_modules before global
+  ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+
+  (defun my/use-eslint-from-node-modules ()
+    (let* ((root (locate-dominating-file
+                  (or (buffer-file-name) default-directory)
+                  "node_modules"))
+           (eslint (and root
+                        (expand-file-name "node_modules/.bin/eslint"
+                                          root))))
+      (when (and eslint (file-executable-p eslint))
+        (setq-local flycheck-javascript-eslint-executable eslint))))
+
+  (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
   (autoload 'flycheck-get-checker-for-buffer "flycheck")
+
   (defun sanityinc/enable-js2-checks-if-flycheck-inactive ()
     (unless (flycheck-get-checker-for-buffer)
       (setq-local js2-mode-show-parse-errors t)
       (setq-local js2-mode-show-strict-warnings t)))
+
   (add-hook 'js2-mode-hook 'sanityinc/enable-js2-checks-if-flycheck-inactive)
+  (add-hook 'js2-mode-hook #'my/use-eslint-from-node-modules)
 
   (add-hook 'js2-mode-hook (lambda () (setq mode-name "JS2")))
 
   (js2-imenu-extras-setup))
 
-(setq-default js-indent-level 2)
+(setq-default js-indent-level 4)
 ;; In Emacs >= 25, the following is an alias for js-indent-level anyway
-(setq-default js2-basic-offset 2)
+(setq-default js2-basic-offset 4)
 
 
 (add-to-list 'interpreter-mode-alist (cons "node" 'js2-mode))
@@ -117,15 +142,21 @@
   ;; company is an optional dependency. You have to
   ;; install it separately via package-install
   ;; `M-x package-install [ret] company`
-  (company-mode +1))
-
+  (company-mode +1)
+  (setq tide-format-options '(:tabSize 4 :indentSize 4)))
 ;; aligns annotation to the right hand side
-(setq company-tooltip-align-annotations t)
+(setq company-tooltip-align-annotations nil)
 
 ;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
+;; (add-hook 'before-save-hook 'tide-format-before-save)
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+
 
 (provide 'init-javascript)
 ;;; init-javascript.el ends here

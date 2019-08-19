@@ -27,7 +27,11 @@
 
 (when (maybe-require-package 'flycheck)
   (with-eval-after-load 'flycheck
-    (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)))
+    (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)
+    ;; enable typescript-tslint checker
+    (flycheck-add-mode 'typescript-tslint 'web-mode)))
+
+
 
 (provide 'init-flycheck)
 ;;; init-flycheck.el ends here

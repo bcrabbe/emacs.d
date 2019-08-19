@@ -271,7 +271,7 @@ Match group 1 is MUMBLE.")
   (typescript--regexp-opt-symbol
    '("abstract" "as" "async" "await" "break" "case" "catch" "class" "const"
      "constructor" "continue" "declare" "default" "delete" "do" "else"
-     "enum" "export" "extern" "finally" "for" "function" "from" "get"
+     "enum" "export" "extern" "finally" "for" "function" "from"
      "goto" "if" "implements" "import" "in" "instanceof" "interface" "keyof"
      "let" "module" "namespace" "new" "of" "return" "set" "super" "switch"
      "throw" "true" "try" "type" "typeof" "unknown" "var"
@@ -294,8 +294,8 @@ Match group 1 is MUMBLE.")
 
 (defconst typescript--constant-re
   (typescript--regexp-opt-symbol '("false" "null" "undefined"
-                                 "Infinity" "NaN"
-                                 "true" "arguments"))
+                                   "Infinity" "NaN"
+                                   "true" "arguments"))
   "Regular expression matching constant values.")
 
 (defconst typescript--builtin-re
@@ -318,10 +318,10 @@ Match group 1 is MUMBLE.")
                       (list 1 'font-lock-keyword-face))
                 (cons "\\_<yield\\(\\*\\|\\_>\\)" 'font-lock-keyword-face)
                 (cons typescript--access-modifier-re ''typescript-access-modifier-face)
-                (cons typescript--basic-type-re font-lock-builtin-face)
-                (cons typescript--builtin-re font-lock-type-face)
+                (cons typescript--basic-type-re font-lock-type-face)
+                (cons typescript--builtin-re font-lock-builtin-face)
                 (list typescript--type-hint-re 1 font-lock-type-face)
-                (cons typescript--constant-re font-lock-variable-name-face)))
+                (cons typescript--constant-re font-lock-constant-face)))
   "Level two font lock keywords for `typescript-mode'.")
 
 ;; typescript--pitem is the basic building block of the lexical
@@ -1853,9 +1853,9 @@ and searches for the next token to be highlighted."
      (1 font-lock-type-face))
 
     ;; variable declarations
-    ;; ,(list
-    ;;   (concat "\\_<\\(const\\|var\\|let\\)\\_>\\|" typescript--basic-type-re)
-    ;;   (list #'typescript--variable-decl-matcher nil nil nil))
+    ,(list
+      (concat "\\_<\\(const\\|var\\|let\\)\\_>\\|" typescript--basic-type-re)
+      (list #'typescript--variable-decl-matcher nil nil nil))
 
     ;; class instantiation
     ,(list
