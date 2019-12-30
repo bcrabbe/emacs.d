@@ -34,18 +34,42 @@
 (maybe-require-package 'rjsx-mode)
 (maybe-require-package 'graphql-mode)
 (maybe-require-package 'scala-mode)
-;; (maybe-require-package 'ensime-mode)
+(maybe-require-package 'sbt-mode)
+;; (maybe-require-package 'ensime)
 ;;; (maybe-require-package 'indium)
 
 ;; (add-to-list 'exec-path "/usr/local/Cellar/sbt/1.2.8/bin/sbt")
 (setq
- ensime-sbt-command "/usr/local/Cellar/sbt/1.2.8/libexec/bin/sbt.bat"
+ ensime-sbt-command "/usr/local/.8/libexec/bin/sbt.bat"
  sbt:program-name "/usr/local/Cellar/sbt/1.2.8/libexec/bin/sbt.bat")
+
+(setq sbt:prefer-nested-projects t)
+
+(add-hook 'sbt-mode-hook
+          (lambda ()
+            (setq prettify-symbols-alist
+                  `((,(expand-file-name (directory-file-name default-directory)) . ?⌂)
+                    (,(expand-file-name "~") . ?~)))
+            (prettify-symbols-mode t)))
+
+(setq compilation-auto-jump-to-first-error t)
+(global-set-key (kbd "C-c s") 'sbt-hydra)
+
+(defun insert-random-uuid ()
+  (interactive)
+  (shell-command "uuidgen" t))
 
 (setq erlang-root-dir "/usr/local/Cellar/erlang/21.1.1")
 
 (maybe-require-package 'key-chord)
 (key-chord-mode +1)
+
+(defun markdown-convert-buffer-to-org ()
+  "Convert the current buffer's content from markdown to orgmode format and save it with the current buffer's file name but with .org extension."
+  (interactive)
+  (shell-command-on-region (point-min) (point-max)
+                           (format "pandoc -f markdown -t org -o %s"
+                                   (concat (file-name-sans-extension (buffer-file-name)) ".org"))))
 
 ;;make <return> insert a newline; multiple-cursors-mode can still be disabled with C-g.
 (add-hook 'multiple-cursors-mode-hook
