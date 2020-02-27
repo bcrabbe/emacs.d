@@ -246,4 +246,12 @@ export default withStyles(styles, {withTheme: true})(Default);
 
 (global-set-key (kbd "C-c C-y") 'dlh-yank-increment)
 
+(maybe-require-package 'git-link)
+(eval-after-load 'git-link
+  '(progn
+     (add-to-list 'git-link-remote-alist
+                  '("code.corp.creditkarma.com" git-link-github))
+     (add-to-list 'git-link-commit-remote-alist
+                  '("code.corp.creditkarma.com" git-link-github))))
+
 (provide 'init-local)
