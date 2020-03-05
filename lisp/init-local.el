@@ -261,8 +261,10 @@ export default withStyles(styles, {withTheme: true})(Default);
 (defun gen-sctags ()
   "Run sctags **/*.scala shell command."
   (interactive)
-  (shell-command "/usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.scala")
-  (visit-tags-table "."))
+  (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.scala && popd"))
+  (visit-tags-table repo-root))
+
 
 (key-chord-define-global ",." 'gen-sctags)
 (provide 'init-local)
