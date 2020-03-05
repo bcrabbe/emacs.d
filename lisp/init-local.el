@@ -1,3 +1,6 @@
+;;; package --- my personal configuration
+;;; Commentary:
+;;; Code:
 (load "../site-lisp/hl-tags-mode.el")
 (load "../site-lisp/zenburn-theme.el")
 ;;(setq-default custom-enabled-themes '(zenburn-theme))
@@ -56,6 +59,7 @@
 (global-set-key (kbd "C-c s") 'sbt-hydra)
 
 (defun insert-random-uuid ()
+  "Run uuidgen."
   (interactive)
   (shell-command "uuidgen" t))
 
@@ -254,4 +258,12 @@ export default withStyles(styles, {withTheme: true})(Default);
      (add-to-list 'git-link-commit-remote-alist
                   '("code.corp.creditkarma.com" git-link-github))))
 
+(defun gen-sctags ()
+  "Run sctags **/*.scala shell command."
+  (interactive)
+  (shell-command "/usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.scala")
+  (visit-tags-table "."))
+
+(key-chord-define-global ",." 'gen-sctags)
 (provide 'init-local)
+;;; init-local.el ends here
