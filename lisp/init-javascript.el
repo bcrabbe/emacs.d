@@ -154,7 +154,8 @@
 
 (add-hook 'web-mode-hook
           (lambda ()
-            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+            (when (or (string-equal "tsx" (file-name-extension buffer-file-name))
+                      (string-equal "ts" (file-name-extension buffer-file-name)))
               (setup-tide-mode))))
 
 

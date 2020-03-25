@@ -185,7 +185,7 @@ class Default extends React.PureComponent {
         className={classnames(
           this.props.className,
           classes.root,
-        )}
+g        )}
       >
       </div>
     );
@@ -259,13 +259,27 @@ export default withStyles(styles, {withTheme: true})(Default);
                   '("code.corp.creditkarma.com" git-link-github))))
 
 (defun gen-sctags ()
-  "Run sctags **/*.scala shell command."
+  "Generate and visit tags for thrift, scala and js."
   (interactive)
   (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
-  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.scala && popd"))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.{thrift,scala} && popd"))
   (visit-tags-table repo-root))
-
-
+(defun gen-tstags ()
+  "Generate and visit tags for thrift, scala and js."
+  (interactive)
+  (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.{thrift,ts} && popd"))
+  (visit-tags-table repo-root))
+(key-chord-define-global "l;" 'gen-tstags)
 (key-chord-define-global ",." 'gen-sctags)
+
+;;; A fancy grep style fallback for when M-. is not providing.
+(maybe-require-package 'rg)
+(maybe-require-package 'ag)
+(maybe-require-package 'dumb-jump-mode)
+(global-set-key (kbd "C-M-.") 'dumb-jump-go)
+
+(global-set-key (kbd "C-x M-b") 'magit-blame)
+
 (provide 'init-local)
 ;;; init-local.el ends here
