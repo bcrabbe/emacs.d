@@ -5,7 +5,7 @@
 (load "../site-lisp/zenburn-theme.el")
 ;;(setq-default custom-enabled-themes '(zenburn-theme))
 (set-face-attribute 'region nil :background "#066")
-
+(setq shell-file-name "/bin/zsh")
 (maybe-require-package 'edit-server)
 (edit-server-start +1)
 ;; (maybe-require-package 'winner-mode)
@@ -258,21 +258,42 @@ export default withStyles(styles, {withTheme: true})(Default);
      (add-to-list 'git-link-commit-remote-alist
                   '("code.corp.creditkarma.com" git-link-github))))
 
-(defun gen-sctags ()
-  "Generate and visit tags for thrift, scala and js."
+(defun gen-scala-tags ()
+  "Generate and visit tags for scala."
   (interactive)
   (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
-  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.{thrift,scala} && popd"))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.scala && popd"))
   (visit-tags-table repo-root))
-(defun gen-tstags ()
-  "Generate and visit tags for thrift, scala and js."
-  (interactive)
-  (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
-  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.{thrift,ts} && popd"))
-  (visit-tags-table repo-root))
-(key-chord-define-global "l;" 'gen-tstags)
-(key-chord-define-global ",." 'gen-sctags)
 
+(defun gen-thrift-tags ()
+  "Generate and visit tags for thrift."
+  (interactive)
+  (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.thrift && popd"))
+  (visit-tags-table repo-root))
+
+(defun gen-ts-tags ()
+  "Generate and visit tags for thrift, scala and js."
+  (interactive)
+  (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.ts && popd"))
+  (visit-tags-table repo-root))
+
+(defun gen-graphql-tags ()
+  "Generate and visit tags for thrift, scala and js."
+  (interactive)
+  (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.graphql && popd"))
+  (visit-tags-table repo-root))
+
+(key-chord-define-global ",." 'gen-scala-tags)
+(defun visit-lib-tags ()
+  "Visit tags tables for common libraries."
+  (interactive)
+  (setq tag-locations '("~/code/fwk_talon-scala/TAGS", "~/code/con_idl/TAGS", "~/code/ce_credit-ecosystem-libraries/TAGS", "~/software/finagle/TAGS"))
+  (while tag-locations
+    ((visit-tags-table (car tag-locations))
+     (setq tag-locations (cdr tag-locations)))))
 ;;; A fancy grep style fallback for when M-. is not providing.
 (maybe-require-package 'rg)
 (maybe-require-package 'ag)
@@ -280,6 +301,26 @@ export default withStyles(styles, {withTheme: true})(Default);
 (global-set-key (kbd "C-M-.") 'dumb-jump-go)
 
 (global-set-key (kbd "C-x M-b") 'magit-blame)
+
+(global-set-key [mouse-4] 'previous-buffer)
+(global-set-key [mouse-5] 'next-buffer)
+
+
+(defun bc-quote-sexp (start end)
+  "Will wrap the preceeding sexp with <<\"\">>,
+if mark-active, then wraps region."
+  (interactive "r")
+  (if mark-active
+      (progn (goto-char start)
+             (insert "\"")
+             (goto-char (+ 3 end))
+             (insert "\""))
+    (progn (backward-sexp 1)
+           (insert "\"")
+           (forward-sexp 1)
+           (insert "\""))))
+
+(global-set-key (kbd "M-'") 'bc-quote-sexp)
 
 (provide 'init-local)
 ;;; init-local.el ends here
