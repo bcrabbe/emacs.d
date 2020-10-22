@@ -258,6 +258,13 @@ export default withStyles(styles, {withTheme: true})(Default);
      (add-to-list 'git-link-commit-remote-alist
                   '("code.corp.creditkarma.com" git-link-github))))
 
+(defun gen-be-tags ()
+  "Generate and visit tags for scala."
+  (interactive)
+  (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.{thrift,scala} && popd"))
+  (visit-tags-table repo-root))
+
 (defun gen-scala-tags ()
   "Generate and visit tags for scala."
   (interactive)
