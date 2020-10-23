@@ -2,8 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 (load "../site-lisp/hl-tags-mode.el")
+
 (load "../site-lisp/zenburn-theme.el")
-;;(setq-default custom-enabled-themes '(zenburn-theme))
+(setq-default custom-enabled-themes '(zenburn))
+(reapply-themes)
+
 (set-face-attribute 'region nil :background "#066")
 (setq shell-file-name "/bin/zsh")
 (maybe-require-package 'edit-server)
