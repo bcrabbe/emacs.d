@@ -155,55 +155,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 (key-chord-define-global "JJ" 'switch-to-previous-buffer)
 
-(defun fresh-mui-component ()
-  "Insert error_logger call."
-  (interactive)
-  (insert "import React from 'react';
-import {withStyles} from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
-import * as R from 'ramda';
-import classnames from 'classnames';
-
-class Default extends React.PureComponent {
-
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-  }
-
-  static defaultProps = {
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
-  render() {
-    const {classes} = this.props;
-    return (
-      <div
-        style={this.props.style}
-        className={classnames(
-          this.props.className,
-          classes.root,
-g        )}
-      >
-      </div>
-    );
-  }
-}
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-  }
-});
-
-export default withStyles(styles, {withTheme: true})(Default);
-"))
-
 (defun insert-component-did-update ()
   "Insert componentDidUpdate react lifecycle method."
   (interactive)
@@ -332,5 +283,18 @@ if mark-active, then wraps region."
 
 (global-set-key (kbd "M-'") 'bc-quote-sexp)
 
+;;; Expand region
+
+(require-package 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+(key-chord-define-global "MM" 'toggle-frame-fullscreen)
+(key-chord-define-global "@@" 'string-inflection-all-cycle)
+(toggle-frame-fullscreen)
 (provide 'init-local)
 ;;; init-local.el ends here
+
+(defun org-insert-src ()
+  "Add a #+BEGIN_SRC #+END_SRC."
+  (interactive)
+  (insert "#+BEGIN_SRC" "\n"  "#+END_SRC"))
