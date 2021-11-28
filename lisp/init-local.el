@@ -268,6 +268,8 @@ export default withStyles(styles, {withTheme: true})(Default);
   (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.{thrift,scala} && popd"))
   (visit-tags-table repo-root))
 
+(setq epa-pinentry-mode 'loopback)
+
 (defun gen-scala-tags ()
   "Generate and visit tags for scala."
   (interactive)
