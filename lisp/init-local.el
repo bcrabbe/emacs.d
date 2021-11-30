@@ -116,7 +116,12 @@
 (global-set-key (kbd "C-`") 'other-frame)
 (global-set-key (kbd "M-]") 'next-multiframe-window)
 (global-set-key (kbd "M-[") 'previous-multiframe-window)
+
+(maybe-require-package 'contract-region)
+(maybe-require-package 'expand-region)
 (global-set-key (kbd "M-=") 'er/contract-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
 (global-set-key (kbd "C-M-<backspace>") 'backward-kill-sexp)
 (global-set-key (kbd "M-s s") 'paredit-splice-sexp)
 (global-set-key (kbd "M-s p") 'paredit-split-sexp)
