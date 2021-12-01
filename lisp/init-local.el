@@ -145,6 +145,7 @@
   "Insert console.log()."
   (interactive)
   (insert "console.log()"))
+
 (key-chord-define-global "CC" 'insert-console-log)
 (defun insert-const ()
   "Insert const."
@@ -159,62 +160,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 (key-chord-define-global "JJ" 'switch-to-previous-buffer)
-
-(defun fresh-mui-component ()
-  "Insert error_logger call."
-  (interactive)
-  (insert "import React from 'react';
-import {withStyles} from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
-import * as R from 'ramda';
-import classnames from 'classnames';
-
-class Default extends React.PureComponent {
-
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-  }
-
-  static defaultProps = {
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
-  render() {
-    const {classes} = this.props;
-    return (
-      <div
-        style={this.props.style}
-        className={classnames(
-          this.props.className,
-          classes.root,
-g        )}
-      >
-      </div>
-    );
-  }
-}
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-  }
-});
-
-export default withStyles(styles, {withTheme: true})(Default);
-"))
-
-(defun insert-component-did-update ()
-  "Insert componentDidUpdate react lifecycle method."
-  (interactive)
-  (insert "componentDidUpdate(prevProps, prevState) {
-
-  }"))
 
 (maybe-require-package 'multi-web-mode)
 (setq mweb-default-major-mode 'html-mode)
