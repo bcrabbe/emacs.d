@@ -66,7 +66,7 @@
   (interactive)
   (shell-command "uuidgen" t))
 
-(setq erlang-root-dir "/usr/local/Cellar/erlang/21.1.1")
+(setq erlang-root-dir "/usr/local/Cellar/erlang/24.1.4")
 
 (maybe-require-package 'key-chord)
 (key-chord-mode +1)
@@ -268,21 +268,20 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key [mouse-5] 'next-buffer)
 
 
-(defun bc-quote-sexp (start end)
-  "Will wrap the preceeding sexp with <<\"\">>,
-if mark-active, then wraps region."
+(defun bc/binary-quote-sexp (start end)
+  "Will wrap the preceeding sexp with <<\"\">>, if mark-active, then wraps region."
   (interactive "r")
   (if mark-active
       (progn (goto-char start)
              (insert "\"")
-             (goto-char (+ 3 end))
+             (goto-char (+ 1 end))
              (insert "\""))
     (progn (backward-sexp 1)
            (insert "\"")
            (forward-sexp 1)
            (insert "\""))))
 
-(global-set-key (kbd "M-'") 'bc-quote-sexp)
+(global-set-key (kbd "M-'") #'bc/binary-quote-sexp)
 
 (provide 'init-local)
 ;;; init-local.el ends here
