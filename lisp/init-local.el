@@ -116,7 +116,12 @@
 (global-set-key (kbd "C-`") 'other-frame)
 (global-set-key (kbd "M-]") 'next-multiframe-window)
 (global-set-key (kbd "M-[") 'previous-multiframe-window)
+
+(maybe-require-package 'contract-region)
+(maybe-require-package 'expand-region)
 (global-set-key (kbd "M-=") 'er/contract-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
 (global-set-key (kbd "C-M-<backspace>") 'backward-kill-sexp)
 (global-set-key (kbd "M-s s") 'paredit-splice-sexp)
 (global-set-key (kbd "M-s p") 'paredit-split-sexp)
@@ -140,6 +145,7 @@
   "Insert console.log()."
   (interactive)
   (insert "console.log()"))
+
 (key-chord-define-global "CC" 'insert-console-log)
 (defun insert-const ()
   "Insert const."
@@ -154,13 +160,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 (key-chord-define-global "JJ" 'switch-to-previous-buffer)
-
-(defun insert-component-did-update ()
-  "Insert componentDidUpdate react lifecycle method."
-  (interactive)
-  (insert "componentDidUpdate(prevProps, prevState) {
-
-  }"))
 
 (maybe-require-package 'multi-web-mode)
 (setq mweb-default-major-mode 'html-mode)
@@ -218,6 +217,8 @@ Repeated invocations toggle between the two most recently open buffers."
   (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
   (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.{thrift,scala} && popd"))
   (visit-tags-table repo-root))
+
+(setq epa-pinentry-mode 'loopback)
 
 (defun gen-scala-tags ()
   "Generate and visit tags for scala."
