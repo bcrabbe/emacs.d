@@ -17,8 +17,8 @@
               "-I" "../deps" "-I" "./"
               "-I" "../../../include" source)
     :error-patterns
-    ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
-     (error line-start (file-name) ":" line ": " (message) line-end))
+    ((warning line-start (file-name) ":" line ":" column ": Warning:" (message) line-end)
+     (error line-start (file-name) ":" line ":" column ": " (message) line-end))
     :modes (erlang-mode))
   (add-hook 'erlang-mode-hook
             (lambda ()
