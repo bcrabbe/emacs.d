@@ -298,3 +298,9 @@ Repeated invocations toggle between the two most recently open buffers."
   "Add a #+BEGIN_SRC #+END_SRC."
   (interactive)
   (insert "#+BEGIN_SRC" "\n"  "#+END_SRC"))
+
+(defun emacs-FAITH (&rest ignore)
+  "Post faith in the current channel."
+  (interactive)
+  (require 'faith)
+  (insert (faith-quote)))
