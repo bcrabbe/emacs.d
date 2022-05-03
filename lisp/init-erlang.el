@@ -25,5 +25,14 @@ if mark-active, then wraps region."
 
 (global-set-key (kbd "C-M-'") 'bc-insert-erlang-binary)
 
+(defun gen-erl-tags ()
+  "Generate and visit tags for scala."
+  (interactive)
+  (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
+  (shell-command (concat "pushd " repo-root " && find . -name \"*.[he]rl\" -print | etags - && popd"))
+  (visit-tags-table repo-root)
+  (visit-tags-table "~/software/otp/"))
+(key-chord-define-global "<>" 'gen-erl-tags)
+
 (provide 'init-erlang)
 ;;; init-erlang.el ends here
