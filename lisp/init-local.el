@@ -37,10 +37,16 @@
 (maybe-require-package 'emmet-mode)
 (maybe-require-package 'rainbow-mode)
 (maybe-require-package 'key-chord)
+;; Add key-chord-mode to minor-mode-alist
+(if (not (assq 'key-chord-mode minor-mode-alist))
+      (setq minor-mode-alist
+            (cons '(key-chord-mode " KeyC ")
+                  minor-mode-alist)))
 (maybe-require-package 'rjsx-mode)
 (maybe-require-package 'graphql-mode)
 (maybe-require-package 'scala-mode)
 (maybe-require-package 'sbt-mode)
+(maybe-require-package 'bazel)
 ;; (maybe-require-package 'ensime)
 ;;; (maybe-require-package 'indium)
 
@@ -292,7 +298,6 @@ Repeated invocations toggle between the two most recently open buffers."
 (key-chord-define-global "@@" 'string-inflection-all-cycle)
 (toggle-frame-fullscreen)
 (provide 'init-local)
-;;; init-local.el ends here
 
 (defun org-insert-src ()
   "Add a #+BEGIN_SRC #+END_SRC."
@@ -304,3 +309,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (require 'faith)
   (insert (faith-quote)))
+
+
+;;; init-local.el ends here
