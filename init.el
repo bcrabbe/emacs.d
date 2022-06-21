@@ -91,7 +91,7 @@
 (require 'init-php)
 (require 'init-org)
 (require 'init-nxml)
-(require 'init-scala)
+;; (require 'init-scala)
 (require 'init-html)
 (require 'init-css)
 (require 'init-haml)

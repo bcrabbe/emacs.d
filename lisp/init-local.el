@@ -221,7 +221,7 @@ Repeated invocations toggle between the two most recently open buffers."
   "Generate and visit tags for scala."
   (interactive)
   (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
-  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.{thrift,scala} && popd"))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_2/bin/ctags -R -e **/*.scala && popd"))
   (visit-tags-table repo-root))
 
 (setq epa-pinentry-mode 'loopback)
@@ -230,28 +230,28 @@ Repeated invocations toggle between the two most recently open buffers."
   "Generate and visit tags for scala."
   (interactive)
   (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
-  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.scala && popd"))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_2/bin/ctags -R -e **/*.scala && popd"))
   (visit-tags-table repo-root))
 
 (defun gen-thrift-tags ()
   "Generate and visit tags for thrift."
   (interactive)
   (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
-  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.thrift && popd"))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_2/bin/ctags -R -e **/*.thrift && popd"))
   (visit-tags-table repo-root))
 
 (defun gen-ts-tags ()
   "Generate and visit tags for thrift, scala and js."
   (interactive)
   (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
-  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.ts && popd"))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_2/bin/ctags -R -e **/*.ts && popd"))
   (visit-tags-table repo-root))
 
 (defun gen-graphql-tags ()
   "Generate and visit tags for thrift, scala and js."
   (interactive)
   (setq repo-root (vc-call-backend (vc-responsible-backend ".") 'root "."))
-  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_1/bin/ctags -R -e **/*.graphql && popd"))
+  (shell-command (concat "pushd " repo-root " && /usr/local/Cellar/ctags/5.8_2/bin/ctags -R -e **/*.graphql && popd"))
   (visit-tags-table repo-root))
 
 (key-chord-define-global ",." 'gen-scala-tags)
