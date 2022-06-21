@@ -265,8 +265,8 @@ Repeated invocations toggle between the two most recently open buffers."
 ;;; A fancy grep style fallback for when M-. is not providing.
 (maybe-require-package 'rg)
 (maybe-require-package 'ag)
-(maybe-require-package 'dumb-jump-mode)
-(global-set-key (kbd "C-M-.") 'dumb-jump-go)
+;; (maybe-require-package 'dumb-jump-mode)
+;; (global-set-key (kbd "C-M-.") 'dumb-jump-go)
 
 (global-set-key (kbd "C-x M-b") 'magit-blame)
 
