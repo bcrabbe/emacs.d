@@ -216,6 +216,12 @@ Repeated invocations toggle between the two most recently open buffers."
                   '("code.corp.creditkarma.com" git-link-github))
      (add-to-list 'git-link-commit-remote-alist
                   '("code.corp.creditkarma.com" git-link-github))))
+(set git-link-use-commit t)
+
+(defun bc/jira-link (jira-ticket-id)
+  "Link to Jira JIRA-TICKET-ID."
+  (interactive "*sJIRA-TICKET-ID: ")
+  (insert (concat "https://gemini-spaceship.atlassian.net/browse/" jira-ticket-id)))
 
 (defun gen-be-tags ()
   "Generate and visit tags for scala."
