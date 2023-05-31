@@ -39,9 +39,9 @@
 (maybe-require-package 'key-chord)
 ;; Add key-chord-mode to minor-mode-alist
 (if (not (assq 'key-chord-mode minor-mode-alist))
-      (setq minor-mode-alist
-            (cons '(key-chord-mode " KeyC ")
-                  minor-mode-alist)))
+    (setq minor-mode-alist
+          (cons '(key-chord-mode " KeyC ")
+                minor-mode-alist)))
 (maybe-require-package 'rjsx-mode)
 (maybe-require-package 'graphql-mode)
 (maybe-require-package 'scala-mode)
@@ -70,7 +70,12 @@
 (defun insert-random-uuid ()
   "Run uuidgen."
   (interactive)
-  (shell-command "uuidgen" t))
+  (shell-command "uuidgen | tr \"[:upper:]\" \"[:lower:]\"" t))
+
+(defun insert-ts ()
+  "Run uuidgen."
+  (interactive)
+  (shell-command "date  +%s" t))
 
 (setq erlang-root-dir "/usr/local/Cellar/erlang/24.1.4")
 
@@ -101,9 +106,10 @@
 
 ;;;was always breaking my code by pressing this
 (global-set-key (kbd "M-t") nil)
+(global-set-key (kbd "M-f") 'forward-to-word)
 
-(setq-default js2-basic-offset 4)
-(setq-default sgml-basic-offset 4)
+(setq-default js2-basic-offset 2)
+;; (setq-default sgml-basic-offset 4)
 (setq-default js2-strict-trailing-comma-warning nil)
 
 (maybe-require-package 'buffer-move)
@@ -123,7 +129,7 @@
 (global-set-key (kbd "M-]") 'next-multiframe-window)
 (global-set-key (kbd "M-[") 'previous-multiframe-window)
 
-(maybe-require-package 'contract-region)
+;; (maybe-require-package 'contract-region)
 (maybe-require-package 'expand-region)
 (global-set-key (kbd "M-=") 'er/contract-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
@@ -216,7 +222,7 @@ Repeated invocations toggle between the two most recently open buffers."
                   '("code.corp.creditkarma.com" git-link-github))
      (add-to-list 'git-link-commit-remote-alist
                   '("code.corp.creditkarma.com" git-link-github))))
-(set git-link-use-commit t)
+(setq git-link-use-commit t)
 
 (defun bc/jira-link (jira-ticket-id)
   "Link to Jira JIRA-TICKET-ID."
@@ -302,6 +308,8 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (key-chord-define-global "MM" 'toggle-frame-fullscreen)
 (key-chord-define-global "@@" 'string-inflection-all-cycle)
+(key-chord-define-global "UU" 'upcase-char)
+
 (toggle-frame-fullscreen)
 (provide 'init-local)
 
