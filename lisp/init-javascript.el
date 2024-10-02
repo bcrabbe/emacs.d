@@ -12,7 +12,7 @@
 ;; (Maybe-require-package 'typescript-mode)
 
 
-(after-load 'typescript-mode
+(with-eval-after-load 'typescript-mode
   (maybe-require-package 'tide))
 
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))

@@ -95,19 +95,19 @@
     (advice-add 'goto-line-preview :around #'sanityinc/with-display-line-numbers)))
 
 ;;; may need to disable this:
-(when (fboundp 'display-line-numbers-mode)
-  (setq-default display-line-numbers-width 3)
-  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-  (add-hook 'yaml-mode-hook 'display-line-numbers-mode)
-  (add-hook 'yaml-ts-mode-hook 'display-line-numbers-mode))
+;; (when (fboundp 'display-line-numbers-mode)
+;;   (setq-default display-line-numbers-width 3)
+;;   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+;;   (add-hook 'yaml-mode-hook 'display-line-numbers-mode)
+;;   (add-hook 'yaml-ts-mode-hook 'display-line-numbers-mode))
 
 
 
 ;;; might need to disable this:
-(when (boundp 'display-fill-column-indicator)
-  (setq-default indicate-buffer-boundaries 'left)
-  (setq-default display-fill-column-indicator-character ?┊)
-  (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode))
+;; (when (boundp 'display-fill-column-indicator)
+;;   (setq-default indicate-buffer-boundaries 'left)
+;;   (setq-default display-fill-column-indicator-character ?┊)
+;;   (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode))
 
 
 
@@ -116,7 +116,7 @@
 
 (when (maybe-require-package 'undo-tree)
   (add-hook 'after-init-hook 'global-undo-tree-mode)
-  (after-load 'undo-tree
+  (with-eval-after-load 'undo-tree
     (diminish 'undo-tree-mode)))
 
 

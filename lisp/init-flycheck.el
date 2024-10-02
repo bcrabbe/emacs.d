@@ -9,7 +9,7 @@
   (when (maybe-require-package 'flycheck-color-mode-line)
     (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
 
-(after-load 'flychceck
+(with-eval-after-load 'flychceck
   (flycheck-define-checker erlang-otp
     "An Erlang syntax checker using the Erlang interpreter."
     :command ("erlc" "-o" temporary-directory "-Wall"
