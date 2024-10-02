@@ -67,20 +67,20 @@
 ;;   to avoid odd behavior with snippets and indentation
 (use-package yasnippet)
 
-;; Use company-capf as a completion provider.
-;;
-;; To Company-lsp users:
-;;   Company-lsp is no longer maintained and has been removed from MELPA.
-;;   Please migrate to company-capf.
-(use-package company
-  :hook (scala-mode . company-mode)
-  :config
-  (setq lsp-completion-provider :capf))
+;; ;; Use company-capf as a completion provider.
+;; ;;
+;; ;; To Company-lsp users:
+;; ;;   Company-lsp is no longer maintained and has been removed from MELPA.
+;; ;;   Please migrate to company-capf.
+;; (use-package company
+;;   :hook (scala-mode . company-mode)
+;;   :config
+;;   (setq lsp-completion-provider :capf))
 
 ;; Use the Debug Adapter Protocol for running tests and debugging
 (use-package posframe
-  ;; Posframe is a pop-up tool that must be manually installed for dap-mode
-  )
+             ;; Posframe is a pop-up tool that must be manually installed for dap-mode
+             )
 (use-package dap-mode
   :hook
   (lsp-mode . dap-mode)
