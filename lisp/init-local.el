@@ -324,5 +324,58 @@ Repeated invocations toggle between the two most recently open buffers."
   (require 'faith)
   (insert (faith-quote)))
 
+(maybe-require-package 'protobuf-mode)
+
+
+(use-package dired-sidebar
+  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+  :ensure nil
+  :commands (dired-sidebar-toggle-sidebar))
+
+(defun my/find-imports-with-rg ()
+  "Find all import statements containing the identifier at point in the current Git repo using ripgrep."
+  (interactive)
+  (let* ((identifier (thing-at-point 'symbol t))
+         (rg-command (format "rg --no-heading --line-number --color never 'import .*%s' $(git rev-parse --show-toplevel)"
+                             identifier)))
+    (if (not identifier)
+        (message "No identifier at point.")
+      (let ((results (shell-command-to-string rg-command)))
+        (if (string-empty-p results)
+            (message "No import statements found for: %s" identifier)
+          (message "Imports found:\n%s" results))))))
+
+(defun my/find-imports-and-yank ()
+  "Find all import statements containing the identifier at point in the current Git repo using ripgrep.
+Displays results in the minibuffer and yanks the first found import statement."
+  (interactive)
+  (let* ((identifier (thing-at-point 'symbol t))
+         (rg-command (format "rg --no-heading --line-number --color never 'import .*%s' $(git rev-parse --show-toplevel)"
+                             identifier)))
+    (if (not identifier)
+        (message "No identifier at point.")
+      (let ((results (shell-command-to-string rg-command)))
+        (if (string-empty-p results)
+            (message "No import statements found for: %s" identifier)
+          (let* ((lines (split-string results "\n" t))
+                 (first-import (when lines (car lines)))
+                 (import-statement (when first-import
+                                     (string-match "\\(import .*\\)" first-import)
+                                     (match-string 1 first-import))))
+            (when import-statement
+              (kill-new import-statement)
+              (message "Yanked: %s\n\nResults:\n%s" import-statement results))))))))
+
+(defun convert-newlines-to-commas ()
+  "Convert highlighted newline-separated list to a comma-separated list."
+  (interactive)
+  (when (use-region-p)
+    (let ((beg (region-beginning))
+          (end (region-end)))
+      (save-restriction
+        (narrow-to-region beg end) ;; Work only within the region
+        (goto-char (point-min))
+        (while (search-forward "\n" nil t)
+          (replace-match ", " nil t))))))
 
 ;;; init-local.el ends here

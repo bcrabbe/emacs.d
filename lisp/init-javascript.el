@@ -26,7 +26,7 @@
   :group 'programming
   :options '(js2-mode js-mode rjsx-mode))
 
-(defconst preferred-javascript-indent-level 4)
+(defconst preferred-javascript-indent-level 2)
 
 ;; Need to first remove from list if present, since elpa adds entries too, which
 ;; may be in an arbitrary order
@@ -142,7 +142,7 @@
   ;; company is an optional dependency. You have to
   ;; install it separately via package-install
   ;; `M-x package-install [ret] company`
-  (company-mode +1)
+  ;; (company-mode +1)
   (setq tide-format-options '(:tabSize 4 :indentSize 4)))
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations nil)
