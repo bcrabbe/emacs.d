@@ -366,6 +366,30 @@ Displays results in the minibuffer and yanks the first found import statement."
               (kill-new import-statement)
               (message "Yanked: %s\n\nResults:\n%s" import-statement results))))))))
 
+(defun my/find-imports-and-yank-2 ()
+  "Find all import statements containing the identifier at point in the current Git repo using ripgrep.
+Display the results in a buffer, allow selection, and yank the chosen import."
+  (interactive)
+  (let* ((identifier (thing-at-point 'symbol t)))
+    (if (not identifier)
+        (message "No identifier at point.")
+      (let* ((rg-command (format "rg --no-heading --line-number --color never 'import .*%s' $(git rev-parse --show-toplevel)"
+                                 (shell-quote-argument identifier)))
+             (results (split-string (shell-command-to-string rg-command) "\n" t)))
+        (if (null results)
+            (message "No import statements found for: %s" identifier)
+          (let* ((clean-imports (mapcar (lambda (line)
+                                          (if (string-match "\\(import .*\\)" line)
+                                              (match-string 1 line)
+                                            line))
+                                        results))
+                 (selection (completing-read "Select import to yank: " clean-imports nil t)))
+            (when selection
+              (kill-new selection)
+              (message "Yanked: %s" selection)
+              (with-output-to-temp-buffer "*Import Results*"
+                (princ (mapconcat #'identity results "\n"))))))))))
+
 (defun convert-newlines-to-commas ()
   "Convert highlighted newline-separated list to a comma-separated list."
   (interactive)
