@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 (load "../site-lisp/hl-tags-mode.el")
-
+(maybe-require-package 'key-chord)
 (load "../site-lisp/zenburn-theme.el")
 (setq-default custom-enabled-themes '(zenburn))
 (reapply-themes)
@@ -36,7 +36,6 @@
 (maybe-require-package 'string-inflection)
 (maybe-require-package 'emmet-mode)
 (maybe-require-package 'rainbow-mode)
-(maybe-require-package 'key-chord)
 ;; Add key-chord-mode to minor-mode-alist
 (if (not (assq 'key-chord-mode minor-mode-alist))
     (setq minor-mode-alist
