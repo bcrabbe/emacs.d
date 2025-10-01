@@ -58,8 +58,8 @@
   (require 'rx)
   (require 'newcomment))
 
-(eval-when-compile
-  (require 'cl))
+;; (eval-when-compile
+;;   (require 'cl))
 
 ;;; Constants
 

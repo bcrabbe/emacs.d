@@ -2,10 +2,17 @@
 ;;; Commentary:
 ;;; Code:
 (load "../site-lisp/hl-tags-mode.el")
+(add-to-list 'package-archives
+             '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
+
 (maybe-require-package 'key-chord)
 (load "../site-lisp/zenburn-theme.el")
-(setq-default custom-enabled-themes '(zenburn))
-(reapply-themes)
+(defun color-theme-bc-zenburn ()
+  "Apply zenburn-theme."
+  (interactive)
+  (setq-default custom-enabled-themes '(zenburn))
+  (reapply-themes))
+(color-theme-bc-zenburn)
 
 (set-face-attribute 'region nil :background "#066")
 (setq shell-file-name "/bin/zsh")
@@ -346,27 +353,6 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (defun my/find-imports-and-yank ()
   "Find all import statements containing the identifier at point in the current Git repo using ripgrep.
-Displays results in the minibuffer and yanks the first found import statement."
-  (interactive)
-  (let* ((identifier (thing-at-point 'symbol t))
-         (rg-command (format "rg --no-heading --line-number --color never 'import .*%s' $(git rev-parse --show-toplevel)"
-                             identifier)))
-    (if (not identifier)
-        (message "No identifier at point.")
-      (let ((results (shell-command-to-string rg-command)))
-        (if (string-empty-p results)
-            (message "No import statements found for: %s" identifier)
-          (let* ((lines (split-string results "\n" t))
-                 (first-import (when lines (car lines)))
-                 (import-statement (when first-import
-                                     (string-match "\\(import .*\\)" first-import)
-                                     (match-string 1 first-import))))
-            (when import-statement
-              (kill-new import-statement)
-              (message "Yanked: %s\n\nResults:\n%s" import-statement results))))))))
-
-(defun my/find-imports-and-yank-2 ()
-  "Find all import statements containing the identifier at point in the current Git repo using ripgrep.
 Display the results in a buffer, allow selection, and yank the chosen import."
   (interactive)
   (let* ((identifier (thing-at-point 'symbol t)))
@@ -400,5 +386,47 @@ Display the results in a buffer, allow selection, and yank the chosen import."
         (goto-char (point-min))
         (while (search-forward "\n" nil t)
           (replace-match ", " nil t))))))
+
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package
+ '(eat :type git
+       :host codeberg
+       :repo "akib/emacs-eat"
+       :files ("*.el" ("term" "term/*.el") "*.texi"
+               "*.ti" ("terminfo/e" "terminfo/e/*")
+               ("terminfo/65" "terminfo/65/*")
+               ("integration" "integration/*")
+               (:exclude ".dir-locals.el" "*-tests.el"))))
+
+(use-package claude-code-ide
+  :straight (:type git :host github :repo "manzaltu/claude-code-ide.el")
+  :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
+  :config
+  (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
+
+;; (maybe-require-package 'vterm)
+
+;; (add-to-list 'load-path (expand-file-name "site-lisp/claude-code-ide.el" user-emacs-directory))
+;; (load (expand-file-name "site-lisp/claude-code-ide.el/claude-code-ide.el" user-emacs-directory))
+;; (global-set-key (kbd "C-c C-'") 'claude-code-ide-menu)
+;; (claude-code-ide-emacs-tools-setup)
+
+
 
 ;;; init-local.el ends here

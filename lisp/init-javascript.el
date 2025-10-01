@@ -6,7 +6,7 @@
 (maybe-require-package 'js2-mode)
 (maybe-require-package 'rjsx-mode)
 (maybe-require-package 'coffee-mode)
-(load "../site-lisp/typescript-mode.el")
+;; (load "../site-lisp/typescript-mode.el")
 (maybe-require-package 'ng2-mode)
 (maybe-require-package 'web-mode)
 ;; (Maybe-require-package 'typescript-mode)
@@ -19,12 +19,12 @@
 
 (maybe-require-package 'prettier-js)
 
-(defcustom preferred-javascript-mode
-  (first (remove-if-not #'fboundp '(js2-mode js-mode rjsx-mode)))
-  "Javascript mode to use for .js files."
-  :type 'symbol
-  :group 'programming
-  :options '(js2-mode js-mode rjsx-mode))
+;; (defcustom preferred-javascript-mode
+;;   (first (remove-if-not #'fboundp '(js2-mode js-mode rjsx-mode)))
+;;   "Javascript mode to use for .js files."
+;;   :type 'symbol
+;;   :group 'programming
+;;   :options '(js2-mode js-mode rjsx-mode))
 
 (defconst preferred-javascript-indent-level 2)
 

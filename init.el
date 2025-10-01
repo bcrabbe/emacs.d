@@ -102,7 +102,7 @@
 (require 'init-php)
 (require 'init-org)
 (require 'init-nxml)
-;; (require 'init-scala)
+(require 'init-scala)
 ;; (require 'init-copilot)
 (require 'init-html)
 (require 'init-css)
@@ -135,8 +135,8 @@
 (require 'init-paredit)
 (require 'init-lisp)
 (require 'init-sly)
-(require 'init-clojure)
-(require 'init-clojure-cider)
+;; (require 'init-clojure)
+;; (require 'init-clojure-cider)
 
 (when *spell-check-support-enabled*
   (require 'init-spelling))
